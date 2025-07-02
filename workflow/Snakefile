@@ -1,37 +1,27 @@
-# Main entrypoint of the workflow.
-# Please follow the best practices:
-# https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
-# in particular regarding the standardized folder structure mentioned there.
+# Master Snakefile
+
+# Load configuration
+configfile: "config/config.yaml"
+
+# Global variables from config
+image = config["cvmfs_apptainer_image"]
+run_list = config["runs"]
+
+# panths
+qw_data = config["qw_data"]
+qw_rootfiles = config["qw_rootfiles"]
 
 
-# load configuration
-# -----------------------------------------------------
-configfile: "config/config.yml"
+# Internal config
+#rootfile_prefix = config["rootfile_prefix"]
 
+# Include rule files
+include: "rules/processing.smk"
+include: "rules/plotting.smk"
 
-# load rules
-# -----------------------------------------------------
-include: "rules/common.smk"
-include: "rules/process_reads.smk"
-
-
-# optional messages, log and error handling
-# -----------------------------------------------------
-onstart:
-    print("\n--- Analysis started ---\n")
-
-
-onsuccess:
-    print("\n--- Workflow finished! ---\n")
-
-
-onerror:
-    print("\n--- An error occurred! ---\n")
-
-
-# target rules
-# -----------------------------------------------------
+# Define the overall targets
 rule all:
     input:
-        "results/multiqc/multiqc_report.html",
-    default_target: True
+        # Plots are still generated within the project results directory
+        expand("results/plots/bpm1i06XP_vs_bpm1i06YP_run{run}.pdf", run=run_list),
+        expand("results/plots/la41_vs_la42_run{run}.pdf", run=run_list)
