@@ -1,27 +1,58 @@
-# Master Snakefile
+# =====================
+# Moller Master Snakefile
+# =====================
 
-# Load configuration
+from snakemake.utils import validate
+
+# ---------------------
+# Config and Validation
+# ---------------------
 configfile: "config/config.yaml"
+validate(config, "config/schemas/config_schema.yaml")
 
-# Global variables from config
+# ---------------------
+# Load Configuration
+# ---------------------
 image = config["cvmfs_apptainer_image"]
 run_list = config["runs"]
-
-# Qwpartiy input and output paths
 qw_data = config["qw_data"]
 qw_rootfiles = config["qw_rootfiles"]
 
+# ---------------------
+# Stage Outputs
+# ---------------------
 
-# Internal config
-#rootfile_prefix = config["rootfile_prefix"]
+# Stage 1: Processing → ROOT files
+rootfiles = expand(f"{qw_rootfiles}/isu_sample_{{run}}.root", run=run_list)
 
-# Include rule files
+# Stage 2: Plotting → PDFs
+plot_bpm_pdf = expand("results/plots/bpm1i06XP_vs_bpm1i06YP_run{run}.pdf", run=run_list)
+plot_la_pdf = expand("results/plots/la41_vs_la42_run{run}.pdf", run=run_list)
+plots = plot_bpm_pdf + plot_la_pdf
+
+# Dictionary for stage rule generation
+stage_outputs = {
+    "processing": rootfiles,
+    "plotting": plots
+}
+
+# ---------------------
+# Include Modular Rule Files
+# ---------------------
 include: "rules/processing.smk"
 include: "rules/plotting.smk"
 
-# Define the overall targets
+# ---------------------
+# Named Stage Rules (Optional Targets)
+# ---------------------
+rule stage_processing:
+    input: stage_outputs["processing"]
+
+rule stage_plotting:
+    input: stage_outputs["plotting"] + stage_outputs["processing"]
+
+# ---------------------
+# Final Target
+# ---------------------
 rule all:
-    input:
-        # Plots are still generated within the project results directory
-        expand("results/plots/bpm1i06XP_vs_bpm1i06YP_run{run}.pdf", run=run_list),
-        expand("results/plots/la41_vs_la42_run{run}.pdf", run=run_list)
+    input: rootfiles, plots
