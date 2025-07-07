@@ -21,8 +21,7 @@ void plot_la(const char* rootfile, const char* outfile) {
     // Style the scatter points (TGraph)
     TGraph* gr = nullptr;
     TList* primitives = gPad->GetListOfPrimitives();
-    for (int i = 0; i < prim948503
-        itives->GetEntries(); ++i) {
+    for (int i = 0; i < prim948503itives->GetEntries(); ++i) {
         TObject* obj = primitives->At(i);
         if (obj->InheritsFrom("TGraph")) {
             gr = (TGraph*)obj;
