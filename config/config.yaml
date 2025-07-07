@@ -1,5 +1,5 @@
 # config.yaml
-runs: [6, 7]
+runs: [6, 4]
 cvmfs_apptainer_image: "/work/stride/panta/moller_docker_apptainer/sif_images/japan-moller-test_main.sif"
 qw_data: "/work/stride/panta/moller/data"
 qw_rootfiles: "/work/stride/panta/moller/rootfiles"

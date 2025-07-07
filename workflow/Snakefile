@@ -8,7 +8,7 @@ from snakemake.utils import validate
 # Config and Validation
 # ---------------------
 configfile: "config/config.yaml"
-validate(config, "config/schemas/config_schema.yaml")
+#validate(config, "../config/schemas/config_schema.yaml")
 
 # ---------------------
 # Load Configuration
