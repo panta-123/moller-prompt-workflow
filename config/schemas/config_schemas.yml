@@ -1,0 +1,44 @@
+# config_schema.yaml
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "Moller Experiment Configuration"
+description: "Configuration parameters for the Moller experiment data processing workflow."
+type: object # The root of your config file should be a YAML object (dictionary)
+
+properties:
+  runs:
+    type: array
+    description: "A list of integer run numbers to be processed by the workflow."
+    items:
+      type: integer
+      description: "A single run number."
+    minItems: 1 # Ensures at least one run number is provided
+    uniqueItems: true # Ensures all run numbers in the list are unique
+
+  cvmfs_apptainer_image:
+    type: string
+    description: "Absolute path to the CVMFS Apptainer (Singularity) image file (.sif)."
+    pattern: "^/" # Ensures the path starts with a '/' (absolute path)
+
+  qw_data:
+    type: string
+    description: "Absolute path to the directory containing QW data files."
+    pattern: "^/" # Ensures the path starts with a '/' (absolute path)
+
+  qw_rootfiles:
+    type: string
+    description: "Absolute path to the directory where output ROOT files will be stored."
+    pattern: "^/" # Ensures the path starts with a '/' (absolute path)
+
+  apptainer_bindpath:
+    type: string
+    description: "Comma-separated list of paths to bind mount into the Apptainer container (e.g., '/u,/cache,/work')."
+    # A more complex pattern could validate the comma-separated format, but this is sufficient for type.
+
+required:
+  - runs
+  - cvmfs_apptainer_image
+  - qw_data
+  - qw_rootfiles
+  - apptainer_bindpath
+
+#additionalProperties: false # Disallow any properties not defined in this schema

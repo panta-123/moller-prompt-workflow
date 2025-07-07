@@ -7,7 +7,7 @@ configfile: "config/config.yaml"
 image = config["cvmfs_apptainer_image"]
 run_list = config["runs"]
 
-# panths
+# Qwpartiy input and output paths
 qw_data = config["qw_data"]
 qw_rootfiles = config["qw_rootfiles"]
 

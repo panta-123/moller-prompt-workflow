@@ -1,6 +1,6 @@
 # config.yaml
 runs: [6, 7]
-cvmfs_apptainer_image: /work/stride/panta/moller_docker_apptainer/sif_images/japan-moller-test_main.sif
-qw_data: /work/stride/panta/moller/data
-qw_rootfiles: /work/stride/panta/moller/rootfiles
+cvmfs_apptainer_image: "/work/stride/panta/moller_docker_apptainer/sif_images/japan-moller-test_main.sif"
+qw_data: "/work/stride/panta/moller/data"
+qw_rootfiles: "/work/stride/panta/moller/rootfiles"
 apptainer_bindpath: "/u,/cache,/volatile,/scratch,/work,/w"
