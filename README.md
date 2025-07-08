@@ -30,5 +30,6 @@ To use this workflow, you need to have Snakemake installed on your system, along
 Once Snakemake and Apptainer are installed and the repository is cloned, you can run the workflow from the root of the project directory.
 
 ```bash
-snakemake --use-apptainer --apptainer-args "--bind /u,/cache,/volatile,/scratch,/work,/w"
+snakemake --cores 1 --use-apptainer --apptainer-args "--bind /u,/cache,/volatile,/scratch,/work,/w"
 ```
+Please update number of core to use parallel execuion. `--cores x`
