@@ -21,7 +21,7 @@ To use this workflow, you need to have Snakemake installed on your system, along
     Clone this Snakemake workflow repository to your local machine:
 
     ```bash
-    git clone [https://github.com/panta-123/moller-prompt-workflow.git](https://github.com/panta-123/moller-prompt-workflow.git) # 
+    git clone https://github.com/panta-123/moller-prompt-workflow.git
     cd moller-prompt-workflow
     ```
 
